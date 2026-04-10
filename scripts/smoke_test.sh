@@ -14,6 +14,7 @@ set -e
 
 DEVICE=${1:-cpu}
 DTYPE=float32
+TORCH_COMPILE=${TORCH_COMPILE:-False}
 # Use MPS on Apple Silicon if available and no explicit choice
 if [ "$DEVICE" = "cpu" ] && python -c "import torch; exit(0 if torch.backends.mps.is_available() else 1)" 2>/dev/null; then
     DEVICE="cpu"  # MPS has limited op support, stay on CPU for safety
@@ -77,7 +78,7 @@ python train.py \
     --log_interval=25 \
     --warmup_iters=10 \
     --always_save_checkpoint=True \
-    --compile=False \
+    --compile="${TORCH_COMPILE}" \
     --device=${DEVICE} \
     --dtype=${DTYPE} \
     --wandb_log=False
@@ -108,7 +109,7 @@ python -m fca.train \
     --fca_n_head ${N_HEAD} \
     --lambda_warmup_steps 50 \
     --checkpoint_interval ${MAX_ITERS} \
-    --compile False \
+    --compile "${TORCH_COMPILE}" \
     --device ${DEVICE} \
     --dtype ${DTYPE}
 echo ""
@@ -138,7 +139,7 @@ python -m fca.train \
     --lambda_warmup_steps 50 \
     --random_z \
     --checkpoint_interval ${MAX_ITERS} \
-    --compile False \
+    --compile "${TORCH_COMPILE}" \
     --device ${DEVICE} \
     --dtype ${DTYPE}
 echo ""

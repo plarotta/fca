@@ -12,6 +12,7 @@ APT_PACKAGES=(
   ca-certificates
   git
   python3
+  python3-dev
   python3-pip
   python3-venv
   tmux

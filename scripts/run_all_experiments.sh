@@ -5,6 +5,7 @@
 set -e
 
 CHECKPOINT_INTERVAL=${CHECKPOINT_INTERVAL:-1000000}
+TORCH_COMPILE=${TORCH_COMPILE:-False}
 
 echo "========================================="
 echo "=== FCA Experiment Suite              ==="
@@ -18,7 +19,7 @@ python -m fca.train \
     --bottleneck_dim 192 \
     --device cuda \
     --dtype bfloat16 \
-    --compile True \
+    --compile "${TORCH_COMPILE}" \
     --checkpoint_interval "${CHECKPOINT_INTERVAL}" \
     --wandb_log \
     --wandb_run_name fca-top-third
@@ -32,7 +33,7 @@ python -m fca.train \
     --random_z \
     --device cuda \
     --dtype bfloat16 \
-    --compile True \
+    --compile "${TORCH_COMPILE}" \
     --checkpoint_interval "${CHECKPOINT_INTERVAL}" \
     --wandb_log \
     --wandb_run_name fca-random-z
@@ -45,7 +46,7 @@ python -m fca.train \
     --bottleneck_dim 192 \
     --device cuda \
     --dtype bfloat16 \
-    --compile True \
+    --compile "${TORCH_COMPILE}" \
     --checkpoint_interval "${CHECKPOINT_INTERVAL}" \
     --wandb_log \
     --wandb_run_name fca-all-layers
@@ -59,7 +60,7 @@ python -m fca.train \
     --no_lambda_schedule \
     --device cuda \
     --dtype bfloat16 \
-    --compile True \
+    --compile "${TORCH_COMPILE}" \
     --checkpoint_interval "${CHECKPOINT_INTERVAL}" \
     --wandb_log \
     --wandb_run_name fca-no-lambda
@@ -73,7 +74,7 @@ python -m fca.train \
     --no_ema_target \
     --device cuda \
     --dtype bfloat16 \
-    --compile True \
+    --compile "${TORCH_COMPILE}" \
     --checkpoint_interval "${CHECKPOINT_INTERVAL}" \
     --wandb_log \
     --wandb_run_name fca-no-ema

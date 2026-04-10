@@ -4,6 +4,8 @@
 
 set -e
 
+TORCH_COMPILE=${TORCH_COMPILE:-False}
+
 echo "=== Training baseline GPT-2 Small ==="
 cd nanoGPT
 python train.py \
@@ -25,7 +27,7 @@ python train.py \
     --gradient_accumulation_steps=40 \
     --device=cuda \
     --dtype=bfloat16 \
-    --compile=True \
+    --compile="${TORCH_COMPILE}" \
     --wandb_log=True \
     --wandb_project=fca \
     --wandb_run_name=baseline
