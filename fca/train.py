@@ -175,6 +175,17 @@ def main():
 
     # --- Data ---
     data_dir = os.path.join('nanoGPT', 'data', args.dataset)
+    train_bin = os.path.join(data_dir, 'train.bin')
+    val_bin = os.path.join(data_dir, 'val.bin')
+    if not os.path.isfile(train_bin) or not os.path.isfile(val_bin):
+        raise FileNotFoundError(
+            f"Missing tokenized data: expected {train_bin} and {val_bin}. "
+            "Run training from the project root (directory containing nanoGPT/).\n"
+            "  OpenWebText (large): bash scripts/prepare_data.sh\n"
+            "  Shakespeare (small): cd nanoGPT && uv run python data/shakespeare/prepare.py && cd .. "
+            "then pass --dataset shakespeare\n"
+            "  Smoke test pipeline: bash scripts/smoke_test.sh (uses --dataset mini)"
+        )
 
     def get_batch(split):
         fname = 'train.bin' if split == 'train' else 'val.bin'

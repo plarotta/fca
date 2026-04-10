@@ -189,3 +189,8 @@ fca/
 - **Probe sanity**: Layer 11 k=1 probe ≈ model's own next-token accuracy
 - **Gate sanity**: Starts ~0.5 (uninformed), develops layer-dependent structure after lambda ramp
 - **Random-z sanity**: Perplexity within ±2% of baseline
+ 
+
+note:
+
+`pip install --force-reinstall torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124`
