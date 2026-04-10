@@ -5,8 +5,14 @@
 set -e
 
 TORCH_COMPILE=${TORCH_COMPILE:-False}
+MAX_ITERS=${MAX_ITERS:-10000}
+LR_DECAY_ITERS=${LR_DECAY_ITERS:-${MAX_ITERS}}
+WARMUP_ITERS=${WARMUP_ITERS:-200}
+EVAL_INTERVAL=${EVAL_INTERVAL:-1000}
+EVAL_ITERS=${EVAL_ITERS:-100}
 
 echo "=== Training baseline GPT-2 Small ==="
+echo "=== Quick budget: max_iters=${MAX_ITERS}, eval_interval=${EVAL_INTERVAL}, eval_iters=${EVAL_ITERS} ==="
 cd nanoGPT
 python train.py \
     --out_dir=../results/baseline \
@@ -18,12 +24,12 @@ python train.py \
     --bias=False \
     --dropout=0.0 \
     --learning_rate=6e-4 \
-    --max_iters=100000 \
-    --lr_decay_iters=100000 \
-    --warmup_iters=2000 \
+    --max_iters="${MAX_ITERS}" \
+    --lr_decay_iters="${LR_DECAY_ITERS}" \
+    --warmup_iters="${WARMUP_ITERS}" \
     --min_lr=6e-5 \
-    --eval_interval=2000 \
-    --eval_iters=200 \
+    --eval_interval="${EVAL_INTERVAL}" \
+    --eval_iters="${EVAL_ITERS}" \
     --gradient_accumulation_steps=40 \
     --device=cuda \
     --dtype=bfloat16 \
