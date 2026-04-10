@@ -182,7 +182,7 @@ def main():
             f"Missing tokenized data: expected {train_bin} and {val_bin}. "
             "Run training from the project root (directory containing nanoGPT/).\n"
             "  OpenWebText (large): bash scripts/prepare_data.sh\n"
-            "  Shakespeare (small): cd nanoGPT && uv run python data/shakespeare/prepare.py && cd .. "
+            "  Shakespeare (small): cd nanoGPT && python data/shakespeare/prepare.py && cd .. "
             "then pass --dataset shakespeare\n"
             "  Smoke test pipeline: bash scripts/smoke_test.sh (uses --dataset mini)"
         )

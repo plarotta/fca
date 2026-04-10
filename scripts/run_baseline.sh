@@ -23,6 +23,9 @@ python train.py \
     --eval_interval=2000 \
     --eval_iters=200 \
     --gradient_accumulation_steps=40 \
+    --device=cuda \
+    --dtype=bfloat16 \
+    --compile=True \
     --wandb_log=True \
     --wandb_project=fca \
     --wandb_run_name=baseline

@@ -13,9 +13,13 @@
 set -e
 
 DEVICE=${1:-cpu}
+DTYPE=float32
 # Use MPS on Apple Silicon if available and no explicit choice
 if [ "$DEVICE" = "cpu" ] && python -c "import torch; exit(0 if torch.backends.mps.is_available() else 1)" 2>/dev/null; then
     DEVICE="cpu"  # MPS has limited op support, stay on CPU for safety
+fi
+if [ "$DEVICE" = "cuda" ]; then
+    DTYPE=bfloat16
 fi
 
 SMOKE_DIR="results/smoke"
@@ -37,6 +41,7 @@ EVAL_ITERS=10
 echo "========================================="
 echo "  FCA Pipeline Smoke Test"
 echo "  device=${DEVICE}"
+echo "  dtype=${DTYPE}"
 echo "========================================="
 echo ""
 
@@ -74,6 +79,7 @@ python train.py \
     --always_save_checkpoint=True \
     --compile=False \
     --device=${DEVICE} \
+    --dtype=${DTYPE} \
     --wandb_log=False
 cd ..
 echo ""
@@ -103,7 +109,8 @@ python -m fca.train \
     --lambda_warmup_steps 50 \
     --checkpoint_interval ${MAX_ITERS} \
     --compile False \
-    --device ${DEVICE}
+    --device ${DEVICE} \
+    --dtype ${DTYPE}
 echo ""
 
 # -------------------------------------------------
@@ -132,7 +139,8 @@ python -m fca.train \
     --random_z \
     --checkpoint_interval ${MAX_ITERS} \
     --compile False \
-    --device ${DEVICE}
+    --device ${DEVICE} \
+    --dtype ${DTYPE}
 echo ""
 
 # -------------------------------------------------
