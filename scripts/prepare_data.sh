@@ -6,6 +6,6 @@ set -e
 
 echo "=== Preparing OpenWebText dataset ==="
 cd nanoGPT
-uv run python data/openwebtext/prepare.py
+python data/openwebtext/prepare.py
 cd ..
 echo "=== Done. Data at nanoGPT/data/openwebtext/{train,val}.bin ==="

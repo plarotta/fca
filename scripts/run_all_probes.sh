@@ -40,7 +40,7 @@ for entry in "${MODELS[@]}"; do
 done
 
 if [ ${#JSON_FILES[@]} -ge 2 ]; then
-    uv run python -m probes.train_probes \
+    python -m probes.train_probes \
         --compare "${JSON_FILES[@]}" \
         --compare_labels "${LABELS[@]}" \
         --output_dir "$PROBE_DIR" \

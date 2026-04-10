@@ -13,7 +13,7 @@ HIDDEN_DIR="results/hidden_states/${MODEL_NAME}"
 PROBE_DIR="results/probes"
 
 echo "=== Step 1: Extracting hidden states from ${CHECKPOINT} ==="
-uv run python -m probes.extract \
+python -m probes.extract \
     --checkpoint "${CHECKPOINT}" \
     --data_path nanoGPT/data/openwebtext/val.bin \
     --output_dir "${HIDDEN_DIR}" \
@@ -23,7 +23,7 @@ uv run python -m probes.extract \
 
 echo ""
 echo "=== Step 2: Training probes ==="
-uv run python -m probes.train_probes \
+python -m probes.train_probes \
     --hidden_states "${HIDDEN_DIR}/hidden_states.pt" \
     --output_dir "${PROBE_DIR}" \
     --model_name "${MODEL_NAME}" \

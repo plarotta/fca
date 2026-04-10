@@ -44,7 +44,7 @@ echo ""
 # Step 1: Generate mini dataset
 # -------------------------------------------------
 echo ">>> Step 1/7: Generating mini dataset..."
-uv run python scripts/generate_mini_data.py \
+python scripts/generate_mini_data.py \
     --output_dir "${DATA_DIR}" \
     --n_train 50000 \
     --n_val 5000 \
@@ -56,7 +56,7 @@ echo ""
 # -------------------------------------------------
 echo ">>> Step 2/7: Training baseline..."
 cd nanoGPT
-uv run python train.py \
+python train.py \
     --out_dir="../${SMOKE_DIR}/baseline" \
     --dataset=mini \
     --n_layer=${N_LAYER} \
@@ -82,7 +82,7 @@ echo ""
 # Step 3: Train FCA (primary config)
 # -------------------------------------------------
 echo ">>> Step 3/7: Training FCA (top-third)..."
-uv run python -m fca.train \
+python -m fca.train \
     --out_dir "${SMOKE_DIR}/fca-top-third" \
     --dataset mini \
     --n_layer ${N_LAYER} \
@@ -110,7 +110,7 @@ echo ""
 # Step 4: Train FCA-random-z (ablation)
 # -------------------------------------------------
 echo ">>> Step 4/7: Training FCA (random-z ablation)..."
-uv run python -m fca.train \
+python -m fca.train \
     --out_dir "${SMOKE_DIR}/fca-random-z" \
     --dataset mini \
     --n_layer ${N_LAYER} \
@@ -149,7 +149,7 @@ for MODEL_NAME in baseline fca-top-third fca-random-z; do
 
     HIDDEN_DIR="${SMOKE_DIR}/hidden_states/${MODEL_NAME}"
     echo "  Extracting: ${MODEL_NAME}..."
-    uv run python -m probes.extract \
+    python -m probes.extract \
         --checkpoint "${CKPT}" \
         --data_path "${DATA_DIR}/val.bin" \
         --output_dir "${HIDDEN_DIR}" \
@@ -158,7 +158,7 @@ for MODEL_NAME in baseline fca-top-third fca-random-z; do
         --device ${DEVICE}
 
     echo "  Training probes: ${MODEL_NAME}..."
-    uv run python -m probes.train_probes \
+    python -m probes.train_probes \
         --hidden_states "${HIDDEN_DIR}/hidden_states.pt" \
         --output_dir "${SMOKE_DIR}/probes" \
         --model_name "${MODEL_NAME}" \
@@ -187,7 +187,7 @@ if [ -f "$BASELINE_JSON" ] && [ -f "$FCA_JSON" ]; then
         FCA_FILES+=("$RANDOM_JSON")
         FCA_NAMES+=("fca-random-z")
     fi
-    uv run python -m eval.probe_delta \
+    python -m eval.probe_delta \
         --baseline "$BASELINE_JSON" \
         --fca "${FCA_FILES[@]}" \
         --fca_names "${FCA_NAMES[@]}" \
@@ -212,7 +212,7 @@ done
 
 if [ ${#CKPTS[@]} -ge 1 ]; then
     echo "  Perplexity..."
-    uv run python -m eval.perplexity \
+    python -m eval.perplexity \
         --checkpoints "${CKPTS[@]}" \
         --names "${NAMES[@]}" \
         --data_path "${DATA_DIR}/val.bin" \
@@ -222,7 +222,7 @@ if [ ${#CKPTS[@]} -ge 1 ]; then
     echo ""
 
     echo "  Confidence saturation..."
-    uv run python -m eval.confidence_saturation \
+    python -m eval.confidence_saturation \
         --checkpoints "${CKPTS[@]}" \
         --names "${NAMES[@]}" \
         --data_path "${DATA_DIR}/val.bin" \

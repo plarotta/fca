@@ -6,7 +6,7 @@ set -e
 
 echo "=== Training baseline GPT-2 Small ==="
 cd nanoGPT
-uv run python train.py \
+python train.py \
     --out_dir=../results/baseline \
     --n_layer=12 \
     --n_head=12 \
