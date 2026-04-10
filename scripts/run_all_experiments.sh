@@ -4,6 +4,8 @@
 
 set -e
 
+CHECKPOINT_INTERVAL=${CHECKPOINT_INTERVAL:-1000000}
+
 echo "========================================="
 echo "=== FCA Experiment Suite              ==="
 echo "========================================="
@@ -17,6 +19,7 @@ python -m fca.train \
     --device cuda \
     --dtype bfloat16 \
     --compile True \
+    --checkpoint_interval "${CHECKPOINT_INTERVAL}" \
     --wandb_log \
     --wandb_run_name fca-top-third
 
@@ -30,6 +33,7 @@ python -m fca.train \
     --device cuda \
     --dtype bfloat16 \
     --compile True \
+    --checkpoint_interval "${CHECKPOINT_INTERVAL}" \
     --wandb_log \
     --wandb_run_name fca-random-z
 
@@ -42,6 +46,7 @@ python -m fca.train \
     --device cuda \
     --dtype bfloat16 \
     --compile True \
+    --checkpoint_interval "${CHECKPOINT_INTERVAL}" \
     --wandb_log \
     --wandb_run_name fca-all-layers
 
@@ -55,6 +60,7 @@ python -m fca.train \
     --device cuda \
     --dtype bfloat16 \
     --compile True \
+    --checkpoint_interval "${CHECKPOINT_INTERVAL}" \
     --wandb_log \
     --wandb_run_name fca-no-lambda
 
@@ -68,6 +74,7 @@ python -m fca.train \
     --device cuda \
     --dtype bfloat16 \
     --compile True \
+    --checkpoint_interval "${CHECKPOINT_INTERVAL}" \
     --wandb_log \
     --wandb_run_name fca-no-ema
 

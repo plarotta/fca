@@ -1,5 +1,6 @@
 #!/bin/bash
 # Run probes on all model checkpoints, then generate comparison plots.
+# Defaults are chosen to be friendlier to limited disk.
 # Run from project root: bash scripts/run_all_probes.sh [device]
 
 set -e
